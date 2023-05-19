@@ -70,3 +70,44 @@ python3 manage.py runserver
 ```
 localhost:8000/redoc
 ```
+
+
+### Шаблон наполнения env-файла
+
+```
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DB_HOST=db
+DB_PORT=5432
+```
+
+### Запуск приложения в контейнерах
+
+Перейти в папку:
+
+```
+cd infra/
+```
+
+Развернуть контейнеры:
+
+```
+docker-compose up
+```
+
+Сделать миграции, суперпользователя и собрать статику:
+
+```
+docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py createsuperuser
+docker-compose exec web python manage.py collectstatic --no-input 
+```
+
+### Команда для заполнения базы данными
+
+
+```
+sudo docker compose exec web python manage.py loaddata fixtures.json
+```
